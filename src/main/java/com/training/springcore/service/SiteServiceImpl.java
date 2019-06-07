@@ -1,6 +1,5 @@
 package com.training.springcore.service;
 
-import com.training.springcore.config.BigCorpApplicationConfig;
 import com.training.springcore.model.Site;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +26,15 @@ public class SiteServiceImpl implements SiteService {
 
     @Autowired
     public SiteServiceImpl(CaptorService captorService,ResourceLoader resourceLoader) {
-        System.out.println("Init SiteServiceImpl :" + this);
+        logger.debug("Init SiteServiceImpl :" + this);
         this.captorService = captorService;
         this.resourceLoader = resourceLoader;
     }
 
-    @BigCorpApplicationConfig.Monitored
+
     @Override
     public Site findById(String siteId) {
-        System.out.println("Appel de findById :" + this);
+        logger.debug("Appel de findById :" + this);
         if (siteId == null) {
             return null;
         }
@@ -54,7 +53,7 @@ public class SiteServiceImpl implements SiteService {
         try (InputStream stream = resource.getInputStream()) {
             Scanner scanner = new Scanner(stream).useDelimiter("\\n");
             while (scanner.hasNext()) {
-                System.out.println(scanner.next());
+                logger.debug(scanner.next());
             }
         }
         catch (IOException e) {

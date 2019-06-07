@@ -20,7 +20,7 @@ public class MonitoredAspect {
     @Pointcut("execution(public * find*(..))")
     public void anyFinder(){}
 
-    @Before("@annotation(BigCorpApplicationConfig.Monitored)")
+    //@Before("@annotation(BigCorpApplicationConfig.Monitored)")
     public void logServiceBeforeCall(JoinPoint jp) {
 
         logger.info("Appel finder " + jp.getSignature());

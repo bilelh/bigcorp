@@ -1,6 +1,5 @@
 package com.training.springcore.service;
 
-import com.training.springcore.config.BigCorpApplicationConfig;
 import com.training.springcore.model.Captor;
 import com.training.springcore.service.measure.MeasureService;
 import org.springframework.beans.factory.annotation.Autowired;
