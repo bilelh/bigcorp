@@ -5,6 +5,11 @@ import java.util.Objects;
 
 public class Measure {
     /**
+     * Measure id
+     */
+    private long id;
+
+    /**
      * Measure instant
      */
     private Instant instant;
@@ -48,6 +53,10 @@ public class Measure {
     public void setCaptor(Captor captor) {
         this.captor = captor;
     }
+
+    public long getId() { return id; }
+
+    public void setId(long id) { this.id = id; }
 
     @Override
     public String toString() {
