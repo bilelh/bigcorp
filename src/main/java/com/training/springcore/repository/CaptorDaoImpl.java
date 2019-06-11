@@ -2,6 +2,7 @@ package com.training.springcore.repository;
 
 import com.training.springcore.model.Captor;
 import com.training.springcore.model.Site;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -45,9 +46,12 @@ public class CaptorDaoImpl implements CaptorDao {
 
     @Override
     public Captor findById(String s) {
-        return jdbcTemplate.queryForObject(SELECT_WITH_JOIN +" where c.id = :id ",
-                new MapSqlParameterSource("id", s),
-                this::captorMapper);
+        try {
+            return jdbcTemplate.queryForObject(SELECT_WITH_JOIN +" where c.id = :id ",
+                    new MapSqlParameterSource("id", s),
+                    this::captorMapper);
+        } catch (EmptyResultDataAccessException e) {return null;}
+
     }
 
     @Override

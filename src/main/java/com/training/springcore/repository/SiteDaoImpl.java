@@ -1,6 +1,7 @@
 package com.training.springcore.repository;
 
 import com.training.springcore.model.Site;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,7 @@ public class SiteDaoImpl implements SiteDao {
             return jdbcTemplate.queryForObject("select id, name from SITE where id = :id ",
                     new MapSqlParameterSource("id", s),
                     this::siteMapper);
-        }catch (NullPointerException e) {return null;}
+        }catch (EmptyResultDataAccessException e) {return null;}
 
     }
 
