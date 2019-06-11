@@ -7,7 +7,7 @@ public class Measure {
     /**
      * Measure id
      */
-    private long id;
+    private Long id;
 
     /**
      * Measure instant

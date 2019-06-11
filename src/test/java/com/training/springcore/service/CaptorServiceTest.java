@@ -4,6 +4,7 @@ import com.training.springcore.model.Captor;
 import com.training.springcore.model.PowerSource;
 import com.training.springcore.model.Site;
 import com.training.springcore.repository.CaptorDao;
+import com.training.springcore.service.measure.MeasureServiceConfigurationTest;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,14 +19,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.Set;
 
-
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes ={SiteServiceImplTest.SiteServiceTestConfiguration.class})
-public class CaptorServiceImplTest {
-
-    //@Autowired
-    //private CaptorServiceImpl captorService = new CaptorServiceImpl();
-
+public class CaptorServiceTest {
 
     @Mock
     private CaptorDao captorDao;
@@ -35,7 +30,6 @@ public class CaptorServiceImplTest {
     public void init(){
         MockitoAnnotations.initMocks(this);
     }
-
     @Test
     public void findBySiteShouldReturnNullWhenIdIsNull() {
 // Initialisation
@@ -58,29 +52,4 @@ public class CaptorServiceImplTest {
         Assertions.assertThat(captors).extracting(Captor::getName).contains("Capteur A");
     }
 
-    /*
-    @Test
-    public void findBySiteShouldReturnNullWhenIdIsNull() {
-        // Initialisation
-        String siteId = null;
-
-        // Appel du SUT
-        Set<Captor> captors = captorService.findBySite(siteId);
-
-        // Vérification
-        Assertions.assertThat(captors).isEmpty();
-    }
-
-    @Test
-    public void findBySite() {
-        // Initialisation
-        String siteId = "siteId";
-
-        // Appel du SUT
-        Set<Captor> captors = captorService.findBySite(siteId);
-
-        // Vérification
-        Assertions.assertThat(captors).hasSize(1);
-        Assertions.assertThat(captors).extracting(Captor::getName).contains("Capteur A");
-    }*/
 }
