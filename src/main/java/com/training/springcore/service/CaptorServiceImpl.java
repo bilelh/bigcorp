@@ -37,16 +37,7 @@ public class CaptorServiceImpl implements CaptorService{
 
     @Override
     public Set<Captor> findBySite(String siteId) {
-        /*Set<Captor> captors = new HashSet<>();
-        if (siteId == null) {
-            return captors;
-        }
-        captors.add(new Captor("Capteur A"));*/
-
         List<Captor> captors = captorDao.findBySiteId(siteId) ;
-        try {
-            return captors.stream().collect(Collectors.toSet());
-        } catch (NullPointerException e) {return null;}
-
+        return captors.stream().collect(Collectors.toSet());
     }
 }

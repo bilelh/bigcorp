@@ -1,10 +1,8 @@
 package com.training.springcore.repository;
 
-import com.training.springcore.model.Captor;
 import com.training.springcore.model.Site;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

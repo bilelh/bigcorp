@@ -30,7 +30,9 @@ public class CaptorDaoImpl implements CaptorDao {
     @Override
     public List<Captor> findBySiteId(String siteId) {
         try{
-            return jdbcTemplate.query(SELECT_WITH_JOIN + "where c.site_id = :site_id", this::captorMapper);
+            return jdbcTemplate.query(SELECT_WITH_JOIN + "where c.site_id = :site_id",
+                    new MapSqlParameterSource("site_id", siteId),
+                    this::captorMapper);
         }catch (InvalidDataAccessApiUsageException e) {return null;}
 
     }

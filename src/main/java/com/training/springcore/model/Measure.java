@@ -24,6 +24,13 @@ public class Measure {
      */
     private Captor captor;
 
+    public Measure(Long id, Instant instant, Integer valueInWatt, Captor captor) {
+        this.id = id;
+        this.instant = instant;
+        this.valueInWatt = valueInWatt;
+        this.captor = captor;
+    }
+
     public Measure(Instant instant, Integer valueInWatt, Captor captor) {
         this.instant = instant;
         this.valueInWatt = valueInWatt;
