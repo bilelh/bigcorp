@@ -1,28 +1,37 @@
 package com.training.springcore.model;
 
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.Objects;
 
+@Entity
 public class Measure {
     /**
      * Measure id
      */
+    @Id
+    @GeneratedValue
     private Long id;
 
     /**
      * Measure instant
      */
+    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private Instant instant;
 
     /**
      * Measure valueInWatt
      */
+    @Column(nullable = false)
     private Integer valueInWatt;
 
     /**
      * Measure captor
      */
+    @ManyToOne(optional = false)
     private Captor captor;
+
+
 
     public Measure(Long id, Instant instant, Integer valueInWatt, Captor captor) {
         this.id = id;

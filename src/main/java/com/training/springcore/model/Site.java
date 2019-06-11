@@ -1,24 +1,33 @@
 package com.training.springcore.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+@Entity
 public class Site {
     /**
      * Site id
      */
+    @Id
     private String id = UUID.randomUUID().toString();
 
     /**
      * Site name
      */
+    @Column(nullable = false, length=255)
     private String name;
 
     /**
      * Site captors
      */
+    @OneToMany(mappedBy = "site")
     private Set<Captor> captors;
+
 
     @Deprecated
     public Site() {

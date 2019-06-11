@@ -1,28 +1,35 @@
 package com.training.springcore.model;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
 public class Captor {
     /**
      * Captor id
      */
+    @Id
     private String id = UUID.randomUUID().toString();
 
     /**
      * Captor name
      */
+    @Column(nullable = false, length=255)
     private String name;
 
     /**
      * Captor powerSource
      */
+    @Enumerated(EnumType.STRING)
     private PowerSource powerSource;
 
     /**
      * Captor site
      */
+    @ManyToOne
     private Site site;
+
 
     @Deprecated
     public Captor() {
