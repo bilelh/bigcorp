@@ -24,6 +24,9 @@ public class Captor {
     @Enumerated(EnumType.STRING)
     private PowerSource powerSource;
 
+    @Column(nullable = true)
+    private int defaultPowerInWatt;
+
     /**
      * Captor site
      */
@@ -93,6 +96,10 @@ public class Captor {
     public Site getSite() { return site; }
 
     public void setSite(Site site) { this.site = site; }
+
+    public int getDefaultPowerInWatt() { return defaultPowerInWatt; }
+
+    public void setDefaultPowerInWatt(int defaultPowerInWatt) { this.defaultPowerInWatt = defaultPowerInWatt; }
 
     @Override
     public boolean equals(Object o) {

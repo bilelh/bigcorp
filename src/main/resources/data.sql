@@ -1,6 +1,8 @@
 INSERT INTO SITE (ID, NAME) VALUES('site1', 'Bigcorp Lyon');
-INSERT INTO CAPTOR (ID, NAME, site_id) VALUES('c1', 'Eolienne', 'site1');
-INSERT INTO CAPTOR (ID, NAME, site_id) VALUES('c2', 'Laminoire à chaud', 'site1');
+INSERT INTO CAPTOR (ID, NAME, site_id, power_source, default_power_in_watt)
+VALUES('c1', 'Eolienne', 'site1', 'SIMULATED', null);
+INSERT INTO CAPTOR (ID, NAME, site_id, power_source, default_power_in_watt)
+VALUES('c2', 'Laminoire à chaud', 'site1', 'SIMULATED', null);
 
 INSERT INTO MEASURE (ID, INSTANT, VALUE_IN_WATT, CAPTOR_ID)
 VALUES(-1, PARSEDATETIME ('09-08-18 11:00:00','dd-MM-yy hh:mm:ss', 'fr', 'UTC'), 1000000, 'c1');
