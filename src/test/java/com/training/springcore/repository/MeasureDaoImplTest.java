@@ -2,6 +2,7 @@ package com.training.springcore.repository;
 
 import com.training.springcore.model.Captor;
 import com.training.springcore.model.Measure;
+import com.training.springcore.model.RealCaptor;
 import com.training.springcore.model.Site;
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -46,7 +47,7 @@ public class MeasureDaoImplTest {
     @Test
     public void create() {
         Assertions.assertThat(measureDao.findAll()).hasSize(10);
-        Captor captor = new Captor("Eolienne", new Site("site"));
+        Captor captor = new RealCaptor("Eolienne", new Site("site"));
         captor.setId("c1");
         measureDao.save(new Measure(Instant.now(), 1000000,captor));
         Assertions.assertThat(measureDao.findAll()).hasSize(11);
@@ -67,7 +68,7 @@ public class MeasureDaoImplTest {
     }
     @Test
     public void deleteById() {
-        Captor captor = new Captor("Eolienne", new Site("site"));
+        Captor captor = new RealCaptor("Eolienne", new Site("site"));
         captor.setId("c1");
         Measure newmeasure = measureDao.save(new Measure(Instant.now(), 1000000,captor));
         Assertions.assertThat(measureDao.findById(newmeasure.getId())).isNotEmpty();

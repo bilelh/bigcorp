@@ -1,9 +1,7 @@
 package com.training.springcore.service.measure;
 
 
-import com.training.springcore.model.Captor;
-import com.training.springcore.model.Measure;
-import com.training.springcore.model.MeasureStep;
+import com.training.springcore.model.*;
 import com.training.springcore.service.measure.FixedMeasureService;
 import com.training.springcore.service.measure.MeasureServiceConfigurationTest;
 import org.junit.Test;
@@ -27,7 +25,7 @@ public class FixedMeasureServiceTest {
     /**
      * Captor used in tests
      */
-    private Captor captor = new Captor("test");
+    private Captor captor = new RealCaptor("test", new Site("site"));
     /**
      * Start instant used in tests
      */

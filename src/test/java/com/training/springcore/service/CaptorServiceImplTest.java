@@ -2,6 +2,7 @@ package com.training.springcore.service;
 
 import com.training.springcore.model.Captor;
 import com.training.springcore.model.PowerSource;
+import com.training.springcore.model.RealCaptor;
 import com.training.springcore.model.Site;
 import com.training.springcore.repository.CaptorDao;
 import org.assertj.core.api.Assertions;
@@ -20,7 +21,6 @@ import java.util.Set;
 
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes ={SiteServiceImplTest.SiteServiceTestConfiguration.class})
 public class CaptorServiceImplTest {
 
     //@Autowired
@@ -49,7 +49,7 @@ public class CaptorServiceImplTest {
     public void findBySite() {
 // Initialisation
         String siteId = "siteId";
-        Captor expectedCaptor = new Captor("Capteur A", PowerSource.REAL ,new Site("Florange"));
+        Captor expectedCaptor = new RealCaptor("Capteur A", new Site("Florange"));
         Mockito.when(captorDao.findBySiteId(siteId)).thenReturn(Arrays.asList(expectedCaptor));
 // Appel du SUT
         Set<Captor> captors = captorService.findBySite(siteId);
