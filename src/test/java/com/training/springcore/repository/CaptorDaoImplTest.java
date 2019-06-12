@@ -1,9 +1,11 @@
 package com.training.springcore.repository;
 
 import com.training.springcore.model.Captor;
+import com.training.springcore.model.PowerSource;
 import com.training.springcore.model.Site;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,12 +14,17 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan
 public class CaptorDaoImplTest {
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private CaptorDao captorDao;
@@ -49,7 +56,9 @@ public class CaptorDaoImplTest {
     @Test
     public void create() {
         Assertions.assertThat(captorDao.findAll()).hasSize(2);
-        captorDao.persist(new Captor("New captor", site));
+        Captor captor = new Captor("New captor", site);
+        captor.setPowerSource(PowerSource.SIMULATED);
+        captorDao.persist(captor);
         Assertions.assertThat(captorDao.findAll())
                 .hasSize(3)
                 .extracting(Captor::getName)
@@ -71,5 +80,16 @@ public class CaptorDaoImplTest {
         Assertions.assertThat(captorDao.findById(newcaptor.getId())).isNotNull();
         captorDao.delete(newcaptor);
         Assertions.assertThat(captorDao.findById(newcaptor.getId())).isNull();
+    }
+    @Test
+    public void deleteByIdShouldThrowExceptionWhenIdIsUsedAsForeignKey() {
+        Captor captor = captorDao.findById("c1");
+        Assertions
+                .assertThatThrownBy(() -> {
+                    captorDao.delete(captor);
+                    entityManager.flush();
+                })
+                .isExactlyInstanceOf(PersistenceException.class)
+.hasCauseExactlyInstanceOf(ConstraintViolationException.class);
     }
 }

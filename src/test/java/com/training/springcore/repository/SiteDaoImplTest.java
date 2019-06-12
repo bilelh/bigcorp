@@ -1,22 +1,28 @@
 package com.training.springcore.repository;
 
+import com.training.springcore.model.Captor;
 import com.training.springcore.model.Site;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
+import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan
 public class SiteDaoImplTest {
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Autowired
     private SiteDao siteDao;
@@ -64,5 +70,16 @@ public class SiteDaoImplTest {
         Assertions.assertThat(siteDao.findById(newsite.getId())).isNotNull();
         siteDao.delete(newsite);
         Assertions.assertThat(siteDao.findById(newsite.getId())).isNull();
+    }
+    @Test
+    public void deleteByIdShouldThrowExceptionWhenIdIsUsedAsForeignKey() {
+        Site site = siteDao.findById("site1");
+        Assertions
+                .assertThatThrownBy(() -> {
+                    siteDao.delete(site);
+                    entityManager.flush();
+                })
+                .isExactlyInstanceOf(PersistenceException.class)
+                .hasCauseExactlyInstanceOf(ConstraintViolationException.class);
     }
 }
