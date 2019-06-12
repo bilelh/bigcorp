@@ -5,7 +5,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-public class Captor {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Captor {
     /**
      * Captor id
      */
@@ -19,22 +20,13 @@ public class Captor {
     private String name;
 
     /**
-     * Captor powerSource
-     */
-    @Enumerated(EnumType.STRING)
-    private PowerSource powerSource;
-
-    @Column(name="power")
-    private Integer defaultPowerInWatt;
-
-    /**
      * Captor site
      */
     @ManyToOne
     private Site site;
 
 
-    @Deprecated
+    //@Deprecated
     public Captor() {
         // Use for serializer or deserializer
     }
@@ -57,18 +49,6 @@ public class Captor {
         this.site = site;
     }
 
-    /**
-     * Constructor to use with required property
-     * @param name
-     * @param powerSource
-     * @param site
-     */
-    public Captor(String name , PowerSource powerSource , Site site) {
-        this.name = name;
-        this.powerSource = powerSource;
-        this.site = site;
-    }
-
     public String getId() {
         return id;
     }
@@ -85,21 +65,9 @@ public class Captor {
         this.name = name;
     }
 
-    public PowerSource getPowerSource() {
-        return powerSource;
-    }
-
-    public void setPowerSource(PowerSource powerSource) {
-        this.powerSource = powerSource;
-    }
-
     public Site getSite() { return site; }
 
     public void setSite(Site site) { this.site = site; }
-
-    public Integer getDefaultPowerInWatt() { return defaultPowerInWatt; }
-
-    public void setDefaultPowerInWatt(Integer defaultPowerInWatt) { this.defaultPowerInWatt = defaultPowerInWatt; }
 
     @Override
     public boolean equals(Object o) {
@@ -122,5 +90,4 @@ public class Captor {
                 ", name='" + name + '\'' +
                 '}';
     }
-
 }
