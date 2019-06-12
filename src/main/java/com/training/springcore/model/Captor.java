@@ -25,6 +25,9 @@ public abstract class Captor {
     @ManyToOne
     private Site site;
 
+    @Version
+    private int version;
+
 
     //@Deprecated
     public Captor() {
@@ -68,6 +71,14 @@ public abstract class Captor {
     public Site getSite() { return site; }
 
     public void setSite(Site site) { this.site = site; }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     @Override
     public boolean equals(Object o) {

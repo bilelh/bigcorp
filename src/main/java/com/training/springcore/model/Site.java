@@ -1,9 +1,6 @@
 package com.training.springcore.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
@@ -28,6 +25,8 @@ public class Site {
     @OneToMany(mappedBy = "site")
     private Set<Captor> captors;
 
+    @Version
+    private int version;
 
     //@Deprecated
     public Site() {
@@ -69,6 +68,14 @@ public class Site {
 
     public void setCaptors(Set<Captor> captors) {
         this.captors = captors;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
     }
 
     @Override

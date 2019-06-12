@@ -31,6 +31,9 @@ public class Measure {
     @ManyToOne(optional = false)
     private Captor captor;
 
+    @Version
+    private int version;
+
     public Measure() {    }
 
     public Measure(Long id, Instant instant, Integer valueInWatt, Captor captor) {
@@ -73,6 +76,14 @@ public class Measure {
     public Long getId() { return id; }
 
     public void setId(long id) { this.id = id; }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
 
     @Override
     public String toString() {
