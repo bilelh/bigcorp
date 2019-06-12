@@ -29,7 +29,7 @@ public class Site {
     private Set<Captor> captors;
 
 
-    @Deprecated
+    //@Deprecated
     public Site() {
         // Use for serializer or deserializer
     }

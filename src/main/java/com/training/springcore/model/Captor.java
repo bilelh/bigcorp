@@ -97,9 +97,9 @@ public class Captor {
 
     public void setSite(Site site) { this.site = site; }
 
-    public int getDefaultPowerInWatt() { return defaultPowerInWatt; }
+    public Integer getDefaultPowerInWatt() { return defaultPowerInWatt; }
 
-    public void setDefaultPowerInWatt(int defaultPowerInWatt) { this.defaultPowerInWatt = defaultPowerInWatt; }
+    public void setDefaultPowerInWatt(Integer defaultPowerInWatt) { this.defaultPowerInWatt = defaultPowerInWatt; }
 
     @Override
     public boolean equals(Object o) {

@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import java.util.List;
+import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -29,13 +30,16 @@ public class SiteDaoImplTest {
 
     @Test
     public void findById() {
-        Site site = siteDao.findById("site1");
-        Assertions.assertThat(site.getName()).isEqualTo("Bigcorp Lyon");
+        Optional<Site> site = siteDao.findById("site1");
+        Assertions.assertThat(site)
+                .get()
+                .extracting("name")
+                .containsExactly("Bigcorp Lyon");
     }
     @Test
     public void findByIdShouldReturnNullWhenIdUnknown() {
-        Site site = siteDao.findById("unknown");
-        Assertions.assertThat(site).isNull();
+        Optional<Site> site = siteDao.findById("unknown");
+        Assertions.assertThat(site).isEmpty();
     }
     @Test
     public void findAll() {
@@ -48,7 +52,7 @@ public class SiteDaoImplTest {
     @Test
     public void create() {
         Assertions.assertThat(siteDao.findAll()).hasSize(1);
-        siteDao.persist(new Site("New site"));
+        siteDao.save(new Site("New site"));
         Assertions.assertThat(siteDao.findAll())
                 .hasSize(2)
                 .extracting(Site::getName)
@@ -56,24 +60,26 @@ public class SiteDaoImplTest {
     }
     @Test
     public void update() {
-        Site site = siteDao.findById("site1");
-        Assertions.assertThat(site.getName()).isEqualTo("Bigcorp Lyon");
-        site.setName("Site updated");
-        siteDao.persist(site);
+        Optional<Site> site = siteDao.findById("site1");
+        Assertions.assertThat(site).get().extracting("name").containsExactly("Bigcorp Lyon");
+                site.ifPresent(s -> {
+                    s.setName("Site updated");
+                    siteDao.save(s);
+                });
         site = siteDao.findById("site1");
-        Assertions.assertThat(site.getName()).isEqualTo("Site updated");
+        Assertions.assertThat(site).get().extracting("name").containsExactly("Site updated");
     }
     @Test
     public void deleteById() {
         Site newsite = new Site("New site");
-        siteDao.persist(newsite);
-        Assertions.assertThat(siteDao.findById(newsite.getId())).isNotNull();
+        siteDao.save(newsite);
+        Assertions.assertThat(siteDao.findById(newsite.getId())).isNotEmpty();
         siteDao.delete(newsite);
-        Assertions.assertThat(siteDao.findById(newsite.getId())).isNull();
+        Assertions.assertThat(siteDao.findById(newsite.getId())).isEmpty();
     }
     @Test
     public void deleteByIdShouldThrowExceptionWhenIdIsUsedAsForeignKey() {
-        Site site = siteDao.findById("site1");
+        Site site = siteDao.getOne("site1");
         Assertions
                 .assertThatThrownBy(() -> {
                     siteDao.delete(site);
