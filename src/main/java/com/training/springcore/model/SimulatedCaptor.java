@@ -26,7 +26,7 @@ public class SimulatedCaptor extends Captor {
         // used only by serializer and deserializer
     }
     public SimulatedCaptor(String name, Site site, Integer minPowerInWatt, Integer maxPowerInWatt) {
-        super(name, site);
+        super(name, site, PowerSource.SIMULATED);
         this.minPowerInWatt = minPowerInWatt;
         this.maxPowerInWatt = maxPowerInWatt;
     }

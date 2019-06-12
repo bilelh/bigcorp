@@ -29,6 +29,12 @@ public class CaptorDaoImplTest {
     private EntityManager entityManager;
 
     @Autowired
+    private MeasureDao measureDao;
+
+    @Autowired
+    private SiteDao siteDao;
+
+    @Autowired
     private CaptorDao captorDao;
     private Site site;
     @Before
@@ -114,7 +120,7 @@ public class CaptorDaoImplTest {
                 .withIgnoreNullValues();
         Site site = new Site();
         site.setId("site1");
-        Captor captor = new FixedCaptor("lienn", site);
+        Captor captor = new FixedCaptor("lienn", site, 1000000);
         List<Captor> captors = captorDao.findAll(Example.of(captor, matcher));
         Assertions.assertThat(captors)
                 .hasSize(1)
@@ -169,5 +175,13 @@ public class CaptorDaoImplTest {
                 })
                 .isExactlyInstanceOf(javax.validation.ConstraintViolationException.class)
                 .hasMessageContaining("minPowerInWatt should be less than maxPowerInWatt");
+    }
+    @Test
+    public void deleteBySiteId() {
+        Assertions.assertThat(captorDao.findBySiteId("site1")).hasSize(2);
+        measureDao.deleteAll();
+        captorDao.deleteBySiteId("site1");
+        siteDao.delete(site);
+        Assertions.assertThat(captorDao.findBySiteId("site1")).isEmpty();
     }
 }
