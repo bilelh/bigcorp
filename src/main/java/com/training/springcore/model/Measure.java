@@ -1,6 +1,8 @@
 package com.training.springcore.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -16,13 +18,14 @@ public class Measure {
     /**
      * Measure instant
      */
-    @Column(nullable = false, columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    @Past
+    @NotNull
     private Instant instant;
 
     /**
      * Measure valueInWatt
      */
-    @Column(nullable = false)
+    @NotNull
     private Integer valueInWatt;
 
     /**
