@@ -1,7 +1,7 @@
 INSERT INTO SITE (ID, NAME) VALUES('site1', 'Bigcorp Lyon');
-INSERT INTO CAPTOR (ID, NAME, site_id, power_source, default_power_in_watt)
+INSERT INTO CAPTOR (ID, NAME, site_id, power_source, power)
 VALUES('c1', 'Eolienne', 'site1', 'SIMULATED', null);
-INSERT INTO CAPTOR (ID, NAME, site_id, power_source, default_power_in_watt)
+INSERT INTO CAPTOR (ID, NAME, site_id, power_source, power)
 VALUES('c2', 'Laminoire à chaud', 'site1', 'SIMULATED', null);
 
 INSERT INTO MEASURE (ID, INSTANT, VALUE_IN_WATT, CAPTOR_ID)

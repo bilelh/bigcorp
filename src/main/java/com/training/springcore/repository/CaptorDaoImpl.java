@@ -22,7 +22,7 @@ public class CaptorDaoImpl implements CaptorDao {
 
     @Override
     public List<Captor> findBySiteId(String siteId) {
-        return em.createQuery("select * from CAPTOR c inner join c.site s where s.id = :id" ,
+        return em.createQuery("select c from Captor c inner join c.site s where s.id = :id" ,
                 Captor.class).setParameter("id" , siteId).getResultList();
     }
 
@@ -33,7 +33,7 @@ public class CaptorDaoImpl implements CaptorDao {
 
     @Override
     public List<Captor> findAll() {
-        return em.createQuery("select * from CAPTOR c inner join c.site s" ,
+        return em.createQuery("select c from Captor c inner join c.site s" ,
                 Captor.class).getResultList();
     }
 

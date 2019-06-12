@@ -1,6 +1,8 @@
 package com.training.springcore.repository;
 
+import com.training.springcore.model.Captor;
 import com.training.springcore.model.Measure;
+import com.training.springcore.model.Site;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +17,6 @@ public class MeasureDaoImpl implements MeasureDao {
     @PersistenceContext
     private EntityManager em;
 
-    public MeasureDaoImpl() { }
-
     @Override
     public void persist(Measure measure) {
         em.persist(measure);
@@ -24,13 +24,13 @@ public class MeasureDaoImpl implements MeasureDao {
 
     @Override
     public Measure findById(Long id) {
-        return null;
+        return em.find(Measure.class , id);
     }
 
     @Override
     public List<Measure> findAll() {
-
-        return null;
+        return em.createQuery("select m from Measure m" ,
+                Measure.class).getResultList();
     }
 
     @Override

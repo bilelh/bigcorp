@@ -8,16 +8,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
 @RunWith(SpringRunner.class)
-@JdbcTest
-@ContextConfiguration(classes = {DaoTestConfig.class})
+@DataJpaTest
+@ComponentScan
 public class CaptorDaoImplTest {
 
     @Autowired
@@ -50,7 +49,7 @@ public class CaptorDaoImplTest {
     @Test
     public void create() {
         Assertions.assertThat(captorDao.findAll()).hasSize(2);
-        captorDao.create(new Captor("New captor", site));
+        captorDao.persist(new Captor("New captor", site));
         Assertions.assertThat(captorDao.findAll())
                 .hasSize(3)
                 .extracting(Captor::getName)
@@ -61,22 +60,16 @@ public class CaptorDaoImplTest {
         Captor captor = captorDao.findById("c1");
         Assertions.assertThat(captor.getName()).isEqualTo("Eolienne");
         captor.setName("Captor updated");
-        captorDao.update(captor);
+        captorDao.persist(captor);
         captor = captorDao.findById("c1");
         Assertions.assertThat(captor.getName()).isEqualTo("Captor updated");
     }
     @Test
     public void deleteById() {
         Captor newcaptor = new Captor("New captor", site);
-        captorDao.create(newcaptor);
+        captorDao.persist(newcaptor);
         Assertions.assertThat(captorDao.findById(newcaptor.getId())).isNotNull();
-        captorDao.deleteById(newcaptor.getId());
+        captorDao.delete(newcaptor);
         Assertions.assertThat(captorDao.findById(newcaptor.getId())).isNull();
     }
-    @Test
-    public void deleteByIdShouldThrowExceptionWhenIdIsUsedAsForeignKey() {
-        Assertions.assertThatThrownBy(() -> captorDao.deleteById("c1"))
-                .isExactlyInstanceOf(DataIntegrityViolationException.class);
-    }
-
 }

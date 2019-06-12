@@ -31,7 +31,7 @@ public class Measure {
     @ManyToOne(optional = false)
     private Captor captor;
 
-
+    public Measure() {    }
 
     public Measure(Long id, Instant instant, Integer valueInWatt, Captor captor) {
         this.id = id;

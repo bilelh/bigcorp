@@ -12,8 +12,6 @@ import java.util.List;
 @Transactional
 public class SiteDaoImpl implements SiteDao {
 
-    public SiteDaoImpl() { }
-
     @PersistenceContext
     private EntityManager em;
 
@@ -29,7 +27,7 @@ public class SiteDaoImpl implements SiteDao {
 
     @Override
     public List<Site> findAll() {
-        return em.createQuery("select * from Site s inner join s.captor c" ,
+        return em.createQuery("select s from Site s" ,
                 Site.class).getResultList();
     }
 

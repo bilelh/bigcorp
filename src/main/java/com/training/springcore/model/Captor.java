@@ -24,8 +24,8 @@ public class Captor {
     @Enumerated(EnumType.STRING)
     private PowerSource powerSource;
 
-    @Column(nullable = true)
-    private int defaultPowerInWatt;
+    @Column(name="power")
+    private Integer defaultPowerInWatt;
 
     /**
      * Captor site
