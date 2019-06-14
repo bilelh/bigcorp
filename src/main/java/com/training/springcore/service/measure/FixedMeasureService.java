@@ -3,6 +3,7 @@ package com.training.springcore.service.measure;
 import com.training.springcore.config.properties.BigcorpApplicationMeasureProperties;
 import com.training.springcore.config.properties.BigcorpApplicationProperties;
 import com.training.springcore.model.Captor;
+import com.training.springcore.model.FixedCaptor;
 import com.training.springcore.model.Measure;
 import com.training.springcore.model.MeasureStep;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,17 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FixedMeasureService implements MeasureService {
+public class FixedMeasureService implements MeasureService <FixedCaptor> {
 
     @Autowired
     BigcorpApplicationProperties properties;
 
     @Override
-    public List<Measure> readMeasures(Captor captor, Instant start, Instant end, MeasureStep step) {
+    public List<Measure> readMeasures(FixedCaptor captor, Instant start, Instant end, MeasureStep step) {
         checkReadMeasuresAgrs(captor, start, end, step);
-
         List<Measure> measures = new ArrayList<>();
         Instant current = start;
+
         while(current.isBefore(end)){
             measures.add(new Measure(current, properties.getMeasure().getDefaultFixed(), captor));
             current = current.plusSeconds(step.getDurationInSecondes());

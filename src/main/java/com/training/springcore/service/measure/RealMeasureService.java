@@ -1,12 +1,8 @@
 package com.training.springcore.service.measure;
 
-import com.training.springcore.config.properties.BigcorpApplicationMeasureProperties;
 import com.training.springcore.config.properties.BigcorpApplicationProperties;
-import com.training.springcore.model.Captor;
-import com.training.springcore.model.Measure;
-import com.training.springcore.model.MeasureStep;
+import com.training.springcore.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -14,13 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class RealMeasureService implements MeasureService {
+public class RealMeasureService implements MeasureService <RealCaptor> {
 
     @Autowired
     BigcorpApplicationProperties properties;
 
     @Override
-    public List<Measure> readMeasures(Captor captor, Instant start, Instant end, MeasureStep step) {
+    public List<Measure> readMeasures(RealCaptor captor, Instant start, Instant end, MeasureStep step) {
         checkReadMeasuresAgrs(captor, start, end, step);
 
         List<Measure> measures = new ArrayList<>();
