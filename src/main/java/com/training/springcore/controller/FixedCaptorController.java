@@ -1,5 +1,6 @@
 package com.training.springcore.controller;
 
+import com.training.springcore.exception.NotFoundException;
 import com.training.springcore.model.FixedCaptor;
 import com.training.springcore.model.Site;
 import com.training.springcore.repository.CaptorDao;
@@ -32,7 +33,7 @@ public class FixedCaptorController {
 
     @GetMapping("/create")
     public ModelAndView create(@PathVariable String siteId , FixedCaptor captor){
-        Site site = siteDao.findById(siteId).orElseThrow(IllegalArgumentException::new);
+        Site site = siteDao.findById(siteId).orElseThrow(NotFoundException::new);
 
         return new ModelAndView("captor")
                 .addObject("captor", new FixedCaptor("", site ,captor.getDefaultPowerInWatt()))
@@ -41,17 +42,17 @@ public class FixedCaptorController {
 
     @GetMapping("/{id}")
     public ModelAndView findById(@PathVariable String id, @PathVariable String siteId) {
-        Site site = siteDao.findById(siteId).orElseThrow(IllegalArgumentException::new);
+        Site site = siteDao.findById(siteId).orElseThrow(NotFoundException::new);
         return new ModelAndView("captor")
                 .addObject("captor",
                         captorDao.findById(id)
-                                .orElseThrow(IllegalArgumentException::new))
+                                .orElseThrow(NotFoundException::new))
                 .addObject("site", site);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ModelAndView save(@PathVariable String siteId, FixedCaptor captor) {
-        Site site = siteDao.findById(siteId).orElseThrow(IllegalArgumentException::new);
+        Site site = siteDao.findById(siteId).orElseThrow(NotFoundException::new);
         FixedCaptor captorToPersist;
         System.out.println(captor.getId());
         if (captor.getId() == null) {
@@ -72,7 +73,7 @@ public class FixedCaptorController {
     public ModelAndView delete(@PathVariable String id, @PathVariable String siteId) {
         // Comme les mesures sont liées à un capteur, nous devons faire le ménage avant
         // pour ne pas avoir d'erreur à la suppression d'un site utilisé ailleurs dans la base
-        Site site = siteDao.findById(siteId).orElseThrow(IllegalArgumentException::new);
+        Site site = siteDao.findById(siteId).orElseThrow(NotFoundException::new);
 
         measureDao.deleteByCaptorId(id);
         captorDao.deleteById(id);
