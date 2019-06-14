@@ -11,7 +11,7 @@ public class FixedCaptor extends Captor {
     @NotNull
     private Integer defaultPowerInWatt ;
 
-    @Deprecated
+    //@Deprecated
     public FixedCaptor() {
         super();
         // used only by serializer and deserializer
@@ -22,6 +22,14 @@ public class FixedCaptor extends Captor {
 
     public FixedCaptor(String name, Site site, Integer defaultPowerInWatt) {
         super(name, site, PowerSource.FIXED);
+        this.defaultPowerInWatt = defaultPowerInWatt;
+    }
+
+    public Integer getDefaultPowerInWatt() {
+        return defaultPowerInWatt;
+    }
+
+    public void setDefaultPowerInWatt(Integer defaultPowerInWatt) {
         this.defaultPowerInWatt = defaultPowerInWatt;
     }
 }

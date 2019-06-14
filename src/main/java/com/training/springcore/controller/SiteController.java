@@ -28,7 +28,7 @@ public class SiteController {
     private CaptorDao captorDao;
 
     @Autowired
-    MeasureDao measureDao;
+    private MeasureDao measureDao;
 
     @GetMapping
     public ModelAndView list() {
@@ -77,5 +77,4 @@ public class SiteController {
         return new ModelAndView("sites")
                 .addObject("sites", siteDao.findAll());
     }
-
 }
